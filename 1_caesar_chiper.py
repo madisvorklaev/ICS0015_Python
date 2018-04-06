@@ -27,6 +27,36 @@ def ask_plaintext():
         shift = shift - 25
     while shift < -25:
         shift = shift + 25
+        
+def ask_file():
+    global plaintext
+    global shift
+    global option
+    option = input("Would you like to encrypt (1) or decrypt (2) a message? ")
+    if option == 1:
+        input_file = open(raw_input("Enter the name of the file "))
+        plaintext = input_file.read()
+        plaintext = plaintext.lower()  #get user input and convert to lowercase
+        input_file.close()
+    elif option == 2:
+        input_file = open(raw_input("Enter the name of the file "))
+        plaintext = input_file.read()
+        plaintext = plaintext.lower()  #get user input and convert to lowercase
+        input_file.close()
+    else:
+        print("Please choose 1 or 2")
+        sys.exit()    
+    for character in plaintext:
+        if ord(character)!= 32: #if not SPACE
+            if ord(character) < 97 or ord(character) > 122: #check if input is a-z
+                print("Please enter only basic Latin alphabet characters")
+                sys.exit()
+    shift = input("Enter shift value: ") 
+    while shift > 25:   #26 characters from a to z, a+25=z
+        shift = shift - 25
+    while shift < -25:
+        shift = shift + 25
+
 
 def encrypt(plaintext, shift):
     del ord_buffer[:]   #clear buffer list, necessary when checking the result
@@ -60,7 +90,8 @@ def decrypt(plaintext, shift):
         chr_buffer.append(character)
     return ''.join(chr_buffer)
 
-ask_plaintext()
+#ask_plaintext()
+ask_file()
 if option == 1:
     encrypted_text = encrypt(plaintext, shift)
     print ("The encrypted message is: ") + encrypted_text
