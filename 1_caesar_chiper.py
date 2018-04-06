@@ -22,8 +22,8 @@ def ask_plaintext():
             if ord(character) < 97 or ord(character) > 122: #check if input is a-z
                 print("Please enter only basic Latin alphabet characters")
                 sys.exit()
-    shift = input("Enter shift value: ") #26 characters from a to z
-    while shift > 25:
+    shift = input("Enter shift value: ") 
+    while shift > 25:   #26 characters from a to z, a+25=z
         shift = shift - 25
     while shift < -25:
         shift = shift + 25
