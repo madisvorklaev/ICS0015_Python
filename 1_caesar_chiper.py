@@ -4,7 +4,7 @@ shift = 'None!'
 ord_buffer = []
 chr_buffer = []
 
-def ask_file():
+def get_data():
     global plaintext
     global shift
     input_file = open(raw_input("Enter the name of the file "))
@@ -62,7 +62,7 @@ option = input("Would you like to encrypt (1) or decrypt (2) a message? ")
 if option > 2:
     print("Please choose 1 or 2")
     sys.exit()    
-ask_file()
+get_data()
 if option == 1:
     encrypted_text = encrypt(plaintext, shift)
     print ("The encrypted message is: ") + encrypted_text
