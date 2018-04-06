@@ -1,28 +1,15 @@
 import sys
 plaintext = 'None!'
 shift = 'None!'
-option = 'None!'
 ord_buffer = []
 chr_buffer = []
 
 def ask_file():
     global plaintext
     global shift
-    global option
-    option = input("Would you like to encrypt (1) or decrypt (2) a message? ")
-    if option == 1:
-        input_file = open(raw_input("Enter the name of the file "))
-        plaintext = input_file.read()
-        plaintext = plaintext.lower()  #get user input and convert to lowercase
-        input_file.close()
-    elif option == 2:
-        input_file = open(raw_input("Enter the name of the file "))
-        plaintext = input_file.read()
-        plaintext = plaintext.lower()  #get user input and convert to lowercase
-        input_file.close()
-    else:
-        print("Please choose 1 or 2")
-        sys.exit()    
+    input_file = open(raw_input("Enter the name of the file "))
+    plaintext = input_file.read().lower()
+    input_file.close()
     for character in plaintext:
         if ord(character)!= 32: #if not SPACE
             if ord(character) < 97 or ord(character) > 122: #check if input is a-z
@@ -71,6 +58,10 @@ def decrypt(plaintext, shift):
         chr_buffer.append(character)
     return ''.join(chr_buffer)
 
+option = input("Would you like to encrypt (1) or decrypt (2) a message? ")
+if option > 2:
+    print("Please choose 1 or 2")
+    sys.exit()    
 ask_file()
 if option == 1:
     encrypted_text = encrypt(plaintext, shift)
