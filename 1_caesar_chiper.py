@@ -11,7 +11,7 @@ SPACE_CH = 32
 def get_data():
     global plaintext
     global shift
-    input_file = open(raw_input("Enter the name of the file "))
+    input_file = open(input("Enter the name of the file "))
     plaintext = input_file.read().lower()
     input_file.close()
     for character in plaintext:
@@ -20,7 +20,8 @@ def get_data():
             if ord(character) < FIRST_CH or ord(character) > LAST_CH:
                 print("Please enter only basic Latin alphabet characters")
                 sys.exit()
-    shift = input("Enter shift value: ") 
+    shift = input("Enter shift value: ")
+    shift = int(shift)
     #26 characters from a to z, a+25=z
     while shift > 25:
         shift = shift - 25
@@ -71,21 +72,22 @@ def decrypt(plaintext, shift):
     return ''.join(chr_buffer)
 
 option = input("Would you like to encrypt (1) or decrypt (2) a message? ")
+option = int(option)
 if option > 2:
     print("Please choose 1 or 2")
     sys.exit()    
 get_data()
 if option == 1:
     encrypted_text = encrypt(plaintext, shift)
-    print ("The encrypted message is: ") + encrypted_text
+    print ("The encrypted message is: ", encrypted_text)
     #check if program works correctly, must return the input text
     decrypted_text = decrypt(encrypted_text, shift)
-    print ("The decrypted message was: ") + decrypted_text
+    print ("The decrypted message was: ", decrypted_text)
 else:
     decrypted_text = decrypt(plaintext, shift)
-    print ("The decrypted message is: ") + decrypted_text
+    print ("The decrypted message is: ", decrypted_text)
     encrypted_text = encrypt(decrypted_text, shift)
-    print ("The encrypted message was: ") + encrypted_text
+    print ("The encrypted message was: ", encrypted_text)
 
 ##def ask_plaintext():
 ##    global plaintext
@@ -93,9 +95,9 @@ else:
 ##    global option
 ##    option = input("Would you like to encrypt (1) or decrypt (2) a message? ")
 ##    if option == 1:
-##        plaintext = raw_input("Enter text to be encrypted: ").lower()  #get user input and convert to lowercase
+##        plaintext = input("Enter text to be encrypted: ").lower()  #get user input and convert to lowercase
 ##    elif option == 2:
-##        plaintext = raw_input("Enter text to be decrypted: ").lower()  #get user input and convert to lowercase
+##        plaintext = input("Enter text to be decrypted: ").lower()  #get user input and convert to lowercase
 ##    else:
 ##        print("Please choose 1 or 2")
 ##        sys.exit()    
