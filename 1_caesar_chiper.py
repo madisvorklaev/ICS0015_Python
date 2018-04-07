@@ -3,6 +3,10 @@ plaintext = 'None!'
 shift = 'None!'
 ord_buffer = []
 chr_buffer = []
+FIRST_CH = 97
+LAST_CH = 122
+SPACE_CH = 32
+
 
 def get_data():
     global plaintext
@@ -11,49 +15,57 @@ def get_data():
     plaintext = input_file.read().lower()
     input_file.close()
     for character in plaintext:
-        if ord(character)!= 32: #if not SPACE
-            if ord(character) < 97 or ord(character) > 122: #check if input is a-z
+        if ord(character)!= SPACE_CH:
+            #check if input is a-z
+            if ord(character) < FIRST_CH or ord(character) > LAST_CH:
                 print("Please enter only basic Latin alphabet characters")
                 sys.exit()
     shift = input("Enter shift value: ") 
-    while shift > 25:   #26 characters from a to z, a+25=z
+    #26 characters from a to z, a+25=z
+    while shift > 25:
         shift = shift - 25
     while shift < -25:
         shift = shift + 25
 
 
 def encrypt(plaintext, shift):
-    del ord_buffer[:]   #clear buffer list, necessary when checking the result
-    del chr_buffer[:]   #clear buffer list, necessary when checking the result
+    #clear buffer lists, necessary when checking the result
+    del ord_buffer[:]  
+    del chr_buffer[:]
     for character in plaintext:
-        number = ord(character) + shift #convert characters to ASCII dec and add the shift value
-        if number - shift != 32: #if not SPACE
-            if number < 97:     #a-1=z
+        #convert characters to ASCII dec and add the shift value
+        number = ord(character) + shift
+        if number - shift != SPACE_CH:
+            #make the alphabet roll: a-1=z and z+1=a
+            if number < FIRST_CH:
                 number = number + 26
-            if number > 122:    #z+1=a
+            if number > LAST_CH:
                 number = number - 26
         ord_buffer.append(number)
     for number in ord_buffer:
-        if number < 97 or number > 122: #if not a-z, then it must be space. necessary when checking the result
-            number = 32
-        character = chr(number)   #convert ASCII dec to characters
+        #if not a-z, then it must be space. necessary when checking the result
+        if number < FIRST_CH or number > LAST_CH:
+            number = SPACE_CH
+        #convert ASCII dec to characters
+        character = chr(number)
         chr_buffer.append(character)
-    return ''.join(chr_buffer)  #join list elements to a string
+    #join list elements to a string and return it
+    return ''.join(chr_buffer)
 
 def decrypt(plaintext, shift):
-    del ord_buffer[:]   #clear buffer list, necessary when checking the result
-    del chr_buffer[:]   #clear buffer list, necessary when checking the result
+    del ord_buffer[:]
+    del chr_buffer[:]
     for character in plaintext:
-        number = ord(character) - shift #convert characters to ASCII dec and substract the shift value
-        if number != 32: #if not SPACE
-            if number < 97:
+        number = ord(character) - shift
+        if number != SPACE_CH:
+            if number < FIRST_CH:
                 number = number + 26
-            if number > 122:
+            if number > LAST_CH:
                 number = number - 26
         ord_buffer.append(number)
     for number in ord_buffer:
-        if number < 97 or number > 122: #if not a-z, then it must be space. necessary when checking the result
-            number = 32
+        if number < FIRST_CH or number > LAST_CH:
+            number = SPACE_CH
         character = chr(number)
         chr_buffer.append(character)
     return ''.join(chr_buffer)
@@ -66,12 +78,13 @@ get_data()
 if option == 1:
     encrypted_text = encrypt(plaintext, shift)
     print ("The encrypted message is: ") + encrypted_text
-    decrypted_text = decrypt(encrypted_text, shift) #check if program works correctly
+    #check if program works correctly, must return the input text
+    decrypted_text = decrypt(encrypted_text, shift)
     print ("The decrypted message was: ") + decrypted_text
 else:
     decrypted_text = decrypt(plaintext, shift)
     print ("The decrypted message is: ") + decrypted_text
-    encrypted_text = encrypt(decrypted_text, shift) #check if program works correctly
+    encrypted_text = encrypt(decrypted_text, shift)
     print ("The encrypted message was: ") + encrypted_text
 
 ##def ask_plaintext():
@@ -87,8 +100,8 @@ else:
 ##        print("Please choose 1 or 2")
 ##        sys.exit()    
 ##    for character in plaintext:
-##        if ord(character)!= 32: #if not SPACE
-##            if ord(character) < 97 or ord(character) > 122: #check if input is a-z
+##        if ord(character)!= SPACE_CH: #if not SPACE
+##            if ord(character) < FIRST_CH or ord(character) > LAST_CH: #check if input is a-z
 ##                print("Please enter only basic Latin alphabet characters")
 ##                sys.exit()
 ##    shift = input("Enter shift value: ") 
