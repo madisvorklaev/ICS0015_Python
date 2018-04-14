@@ -1,5 +1,5 @@
 #Class Example v1.0:
-#Uses class to create an object.
+#Uses class and method to create an object.
 #However, it's allowed to create oen object only.
 
 import time
@@ -20,14 +20,17 @@ class Fairytale:
                 time.sleep(0.3)
                 print("   I I   ")
                 time.sleep(0.3)
-                print(self.character, "is ready")
+
+        def __str__(self):
+                return "%s is ready" %(self.character)
 
 thumbelinas_left = 1
 while True:
         try:
                 p = input("Enter any character to make a fairytale character: ")
-                Thumbelina = Fairytale(character = "Thumbelina")
-                Thumbelina.printCharacter()
+                t = Fairytale("Thumbelina")
+                t.printCharacter()
+                print(t) #calls the __str__ method
                 thumbelinas_left -=1
         except ZeroDivisionError as error :
                 print("I'm sorry, Thumbelina is one and only")
