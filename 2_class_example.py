@@ -33,7 +33,7 @@ while True:
                 print(t) #calls the __str__ method
                 thumbelinas_left -=1
         except ZeroDivisionError as error :
-                print("I'm sorry, Thumbelina is one and only")
+                print("I'm sorry, Thumbelina is one and only...")
                 break
         finally:
                 print("Thank you for the 10 points!")
