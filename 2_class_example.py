@@ -35,3 +35,5 @@ while True:
         except ZeroDivisionError as error :
                 print("I'm sorry, Thumbelina is one and only")
                 break
+        finally:
+                print("Thank you for the 10 points!")
