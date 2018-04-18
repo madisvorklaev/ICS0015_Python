@@ -1,6 +1,7 @@
 #Class Example v1.0:
 #Uses class and method to create an object.
 #However, it's allowed to create oen object only.
+#Tested with Python 3.6
 
 import time
 
