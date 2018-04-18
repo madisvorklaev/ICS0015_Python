@@ -1,6 +1,6 @@
 #Class Example v1.0:
-#Uses class and method to create an object.
-#However, it's allowed to create oen object only.
+#Uses a class and a method to create an object.
+#However, it's allowed to create one object only.
 #Tested with Python 3.6
 
 import time
