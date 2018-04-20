@@ -31,6 +31,7 @@ def _open():
     f = open(filename)
     text = f.read()
     f.close()
+    scr.delete('1.0', END)
     scr.insert(tkinter.INSERT, text)
     scr.grid(column = 0, columnspan = 3)
         
@@ -39,8 +40,11 @@ def _save():
     print (window.filename)
 
 def _saveas():
-    window.filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('jpeg files','*.jpg'),('all files','*.*')))
-    print (window.filename)
+    filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('text files','*.txt'),('all files','*.*')))
+    f = open(filename, 'w')
+    contents = scr.get(1.0, END)
+    f.write(contents)
+    f.close
 
 def _quit():
 	window.quit()
