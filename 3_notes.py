@@ -5,11 +5,12 @@ import tkinter
 from tkinter import ttk, scrolledtext, filedialog, messagebox
 from tkinter import *
 
+# initialise a window
 window = Tk()
 window.title('Notes')
 window.geometry('960x540')
 
-# Using a scrolled Text
+# use ScrolledText widget
 scrollW = 960
 scrollH = 540
 scr = scrolledtext.ScrolledText(window, width = scrollW, height = scrollH, wrap = tkinter.WORD)
@@ -69,7 +70,7 @@ class menu_items():
     def _about(self):
         messagebox.showinfo('Notes v1.0', 'Tested with Python 3.6.5 on Windows 10. \nAuthor: Madis Võrklaev')
 
-#creating Menu Bar
+# create a menu bar
 t = menu_items(scr)
 menuBar = tkinter.Menu(window) 
 window.config(menu = menuBar)
@@ -86,5 +87,5 @@ helpMenu = tkinter.Menu(menuBar, tearoff = 0)
 helpMenu.add_command(label ='About', command = t._about)
 menuBar.add_cascade(label = 'Help', menu = helpMenu)
 
-# Starting main window (root window)
+# Start the main window (root window)
 window.mainloop()
