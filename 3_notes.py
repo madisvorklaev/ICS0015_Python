@@ -5,73 +5,83 @@ from tkinter import *
 window = Tk()
 window.title('Notes')
 window.geometry('960x540')
-# window.withdraw()
-# window.iconbitmap(r'C:\Python27\DLLs\pyc.ico')
-
-#window.resizable(0, 0)
 
 # Using a scrolled Text
 scrollW = 960
 scrollH = 540
 scr = scrolledtext.ScrolledText(window, width = scrollW, height = scrollH, wrap = tkinter.WORD)
 
-##txt = '''This is just a matter of time before you become expert in programming.
-##good luck and never lose hope.'''
-##scr.insert(tkinter.INSERT,txt)
-##scr.grid(column = 0, columnspan = 3)
-
-#Call back function for menus
-def _new():
-    contents = ''
-    scr.insert(tkinter.INSERT, contents)
-    scr.grid(column = 0, columnspan = 3)
-
-def _open():
-    filename =  filedialog.askopenfilename(initialdir = 'C:\ ', title = 'Select file', filetypes = (('Text Documents','*.txt'),('All Files','*.*')))
-    f = open(filename)
-    text = f.read()
-    f.close()
-    scr.delete('1.0', END)
-    scr.insert(tkinter.INSERT, text)
-    scr.grid(column = 0, columnspan = 3)
+class menu_items():
+    def __init__(self, scr):
+        self.scr = scr
+        self.filename = ' '
         
-##def _save():
-##   # https://python-forum.io/Thread-save-acts-like-save-as
-##    filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')))
-##    f = open(filename, 'w')
-##    contents = scr.get(1.0, END)
-##    f.write(contents)
-##    f.close
+    def _new(self):
+        scr.delete('1.0', END)
+        scr.grid(column = 0, columnspan = 3)
+        self.filename = ' '
 
-def _saveas():
-    filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')))
-    f = open(filename, 'w')
-    contents = scr.get(1.0, END)
-    f.write(contents)
-    f.close
+    def _open(self):
+        filename =  filedialog.askopenfilename(initialdir = 'C:\ ', title = 'Select file', filetypes = (('Text Documents','*.txt'),('All Files','*.*')))
+        if filename:
+            f = open(filename, 'r+')
+            text = f.read()
+            f.close()
+            scr.delete('1.0', END)
+            scr.insert(tkinter.INSERT, text)
+            scr.grid(column = 0, columnspan = 3)
+            self.filename = filename
+            
+    def _save(self):
+        if self.filename != ' ':
+            try:
+                f = open(self.filename, 'w')
+            except FileNotFoundError as error:
+                print('The file name was not specified')
+        else:
+            filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
+            try:
+                f = open(filename, 'w')
+                self.filename = filename
+            except FileNotFoundError as error:
+                print('The file name was not specified')
+            else:
+                contents = scr.get(1.0, END)
+                f.write(contents)
+                f.close
+        
 
-def _quit():
-    window.quit()
-    window.destroy()
-    exit()
+    def _saveas(self):
+        filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
+        if filename:
+            f = open(filename, 'w')
+            contents = scr.get(1.0, END)
+            f.write(contents)
+            f.close
 
-def _about():
-    messagebox.showinfo("Notes v1.0", "Notes by Madis Võrklaev")
+    def _quit(self):
+        window.quit()
+        window.destroy()
+        exit()
+
+    def _about(self):
+        messagebox.showinfo("Notes v1.0", "Notes by Madis Võrklaev")
 
 #creating Menu Bar
+t = menu_items(scr)
 menuBar = tkinter.Menu(window) 
 window.config(menu = menuBar)
 fileMenu = tkinter.Menu(menuBar, tearoff = 0)
-fileMenu.add_command(label = 'New', command = _new)
-fileMenu.add_command(label = 'Open', command = _open)
-##fileMenu.add_command(label = 'Save', command = _save)
-fileMenu.add_command(label = 'Save as', command = _saveas)
+fileMenu.add_command(label = 'New', command = t._new)
+fileMenu.add_command(label = 'Open', command = t._open)
+fileMenu.add_command(label = 'Save', command = t._save)
+fileMenu.add_command(label = 'Save as', command = t._saveas)
 menuBar.add_cascade(label = 'File', menu = fileMenu)
 fileMenu.add_separator()
-fileMenu.add_command(label = 'Exit', command = _quit) 
+fileMenu.add_command(label = 'Exit', command = t._quit) 
 
 helpMenu = tkinter.Menu(menuBar, tearoff = 0)
-helpMenu.add_command(label ='About', command = _about)
+helpMenu.add_command(label ='About', command = t._about)
 menuBar.add_cascade(label = 'Help', menu = helpMenu)
 
 # Starting main window (root window)
