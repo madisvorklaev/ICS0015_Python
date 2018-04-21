@@ -1,3 +1,6 @@
+# Notes v1.0:
+# Tested with Python 3.6.5 on Windows 10.
+
 import tkinter
 from tkinter import ttk, scrolledtext, filedialog, messagebox
 from tkinter import *
@@ -50,7 +53,6 @@ class menu_items():
                 f.write(contents)
                 f.close
         
-
     def _saveas(self):
         filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
         if filename:
@@ -65,7 +67,7 @@ class menu_items():
         exit()
 
     def _about(self):
-        messagebox.showinfo("Notes v1.0", "Notes by Madis Võrklaev")
+        messagebox.showinfo('Notes v1.0', 'Tested with Python 3.6.5 on Windows 10. \nAuthor: Madis Võrklaev')
 
 #creating Menu Bar
 t = menu_items(scr)
