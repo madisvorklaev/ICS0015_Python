@@ -10,10 +10,9 @@ window = Tk()
 window.title('Notes')
 window.geometry('960x540')
 
-# use ScrolledText widget
-scrollW = 960
-scrollH = 540
-scr = scrolledtext.ScrolledText(window, width = scrollW, height = scrollH, wrap = tkinter.WORD)
+# use the ScrolledText widget
+scr = scrolledtext.ScrolledText(window, wrap = tkinter.WORD)
+scr.pack(side = LEFT, fill = BOTH, expand = YES)
 
 class menu_items():
     def __init__(self, scr):
@@ -22,18 +21,16 @@ class menu_items():
         
     def _new(self):
         scr.delete('1.0', END)
-        scr.grid(column = 0, columnspan = 3)
         self.filename = ' '
 
     def _open(self):
-        filename =  filedialog.askopenfilename(initialdir = 'C:\ ', title = 'Select file', filetypes = (('Text Documents','*.txt'),('All Files','*.*')))
+        filename =  filedialog.askopenfilename(title = 'Select file', filetypes = (('Text Documents','*.txt'),('All Files','*.*')))
         if filename:
             f = open(filename, 'r+')
             text = f.read()
             f.close()
             scr.delete('1.0', END)
             scr.insert(tkinter.INSERT, text)
-            scr.grid(column = 0, columnspan = 3)
             self.filename = filename
             
     def _save(self):
