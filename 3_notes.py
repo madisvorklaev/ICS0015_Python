@@ -17,11 +17,11 @@ scr.pack(side = LEFT, fill = BOTH, expand = YES)
 class menu_items():
     def __init__(self, scr):
         self.scr = scr
-        self.filename = ' '
+        self.filename = None
         
     def _new(self):
         scr.delete('1.0', END)
-        self.filename = ' '
+        self.filename = None
 
     def _open(self):
         filename =  filedialog.askopenfilename(title = 'Select file', filetypes = (('Text Documents','*.txt'),('All Files','*.*')))
@@ -34,7 +34,7 @@ class menu_items():
             self.filename = filename
             
     def _save(self):
-        if self.filename != ' ':
+        if self.filename:
             try:
                 f = open(self.filename, 'w')
             except FileNotFoundError as error:
@@ -64,6 +64,25 @@ class menu_items():
             f.close
 
     def _quit(self):
+# Save confirm from https://www.programcreek.com/python/example/57788/tkMessageBox.askyesnocancel
+        if scr.compare("end-1c", "!=", "1.0"):
+            message = "Do you want to save %s before closing?" % (
+            self.filename or "this untitled document")
+            confirm = messagebox.askyesnocancel(
+            title="Save On Close",
+            message=message,
+            default=messagebox.YES,
+            parent=self.scr)
+            if confirm:
+                reply = "yes"
+                self._save()
+##            if not self.get_saved():
+##                reply = "cancel"
+            elif confirm is None:
+                reply = "cancel"
+                return
+            else:
+                reply = "no"
         window.quit()
         window.destroy()
         exit()
