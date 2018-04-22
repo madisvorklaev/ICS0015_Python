@@ -18,6 +18,7 @@ class menu_items():
     def __init__(self, scr):
         self.scr = scr
         self.filename = None
+        self.is_saved = False
         
     def _new(self):
         scr.delete('1.0', END)
@@ -39,10 +40,12 @@ class menu_items():
                 f = open(self.filename, 'w')
             except FileNotFoundError as error:
                 print('The file name was not specified')
+                self.is_saved = False
             else:
                 contents = scr.get(1.0, END)
                 f.write(contents)
                 f.close
+                self.is_saved = True
         else:
             filename =  filedialog.asksaveasfilename(title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
             try:
@@ -50,10 +53,12 @@ class menu_items():
                 self.filename = filename
             except FileNotFoundError as error:
                 print('The file name was not specified')
+                self.is_saved = False
             else:
                 contents = scr.get(1.0, END)
                 f.write(contents)
                 f.close
+                self.is_saved = True
         
     def _saveas(self):
         filename =  filedialog.asksaveasfilename(title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
@@ -74,12 +79,10 @@ class menu_items():
             default=messagebox.YES,
             parent=self.scr)
             if confirm:
-                reply = "yes"
                 self._save()
-##            if not self.get_saved():
-##                reply = "cancel"
+                if not self.is_saved:
+                   return
             elif confirm is None:
-                reply = "cancel"
                 return
             else:
                 reply = "no"
