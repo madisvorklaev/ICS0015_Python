@@ -42,8 +42,12 @@ class menu_items():
                 f = open(self.filename, 'w')
             except FileNotFoundError as error:
                 print('The file name was not specified')
+            else:
+                contents = scr.get(1.0, END)
+                f.write(contents)
+                f.close
         else:
-            filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
+            filename =  filedialog.asksaveasfilename(title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
             try:
                 f = open(filename, 'w')
                 self.filename = filename
@@ -55,7 +59,7 @@ class menu_items():
                 f.close
         
     def _saveas(self):
-        filename =  filedialog.asksaveasfilename(initialdir = 'C:\ ',title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
+        filename =  filedialog.asksaveasfilename(title = 'Select file',filetypes = (('Text Documents','*.txt'),('All Files','*.*')), defaultextension = '.txt')
         if filename:
             f = open(filename, 'w')
             contents = scr.get(1.0, END)
