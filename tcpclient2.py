@@ -1,19 +1,26 @@
 import socket
+import threading
+import sys
 
-def Main():
-	host = '127.0.0.1'
-	port = 5000
+class Client():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-	s = socket.socket()
-	s.connect((host, port))
+    def sendMsg(self):
+        message = input('=>')
+        while self.message != 'q':
+            self.s.send(message.encode('utf-8'))
+        self.s.close()
 
-	message = input('=>')
-	while message != 'q':
-		s.send(message.encode('utf-8'))
-		data = s.recv(1024).decode('utf-8')
-		print('Received from server: ' + data)
-		message = input('=>')
-	s.close()
+    def __init__(self):
+        self.s.connect(('127.0.0.1', 5000))
+        iThread = threading.Thread(target=self.sendMsg)
+        iThread.daemon = True
+        iThread.start()
 
-if __name__ == '__main__':
-    Main()
+        while True:
+            data = self.s.recv(1024).decode('utf-8')
+            if not data:
+                break
+            print(data)
+            
+client = Client()

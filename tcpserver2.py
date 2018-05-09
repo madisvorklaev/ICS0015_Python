@@ -4,11 +4,12 @@ import threading
 class Server():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     connections = []
+
     def __init__(self):
         self.s.bind(('127.0.0.1', 5000))
         print('Server Running.....')
         self.s.listen(1)
-        
+
     def handler(self, client, address):
         while True:
             data = client.recv(1024).decode('utf-8')
