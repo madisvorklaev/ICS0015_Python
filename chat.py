@@ -1,3 +1,5 @@
+# most of the code is from https://www.youtube.com/watch?v=D0SLpD7JvZI
+
 import socket
 import threading
 import sys
