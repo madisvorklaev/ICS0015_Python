@@ -29,6 +29,10 @@ class Server:
             cThread.start()
             self.connections.append(c)
             print(self.connections)
+            if (len(self.connections)) > 5:
+                c.send(b'Sorry, too many connections')
+                self.connections.remove(c)
+                c.close()
 
 class Client:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -48,6 +52,7 @@ class Client:
             if not data:
                 break
             print(str(data, 'utf-8'))
+            
 
 if (len(sys.argv) > 1):
     client = Client(sys.argv[1])
