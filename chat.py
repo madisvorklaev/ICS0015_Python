@@ -1,4 +1,6 @@
 # most of the code is from https://www.youtube.com/watch?v=D0SLpD7JvZI
+#This is a chat server. Run this first, and then chatclient.py 
+
 
 import socket
 import threading
