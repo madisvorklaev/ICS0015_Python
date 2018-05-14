@@ -8,7 +8,7 @@ import tkinter
 from tkinter import ttk, scrolledtext, filedialog, messagebox
 from tkinter import *
 
-def send_message():
+def send_message(event = None):
     m = message_field.get()
     message_field.delete(0, END)
     s.send(bytes(m+ '\n', 'utf8'))
@@ -19,6 +19,12 @@ def send_message():
 def receive_message():
     while True:
         data = s.recv(1024)
+        q = str(data, 'utf-8')
+        if q == ('{quit}'):
+            print("Sorry, only 5 connections allowed, Chat will exit now")
+            s.close()
+            window.quit()
+            break
         if not data:
             break
         print(str(data, 'utf-8'))
@@ -27,13 +33,14 @@ def receive_message():
 
 window = Tk()
 window.title('Chat')
-window.geometry('960x540')
+window.geometry('200x100')
 
 frame = tkinter.Frame()
 message_show = scrolledtext.ScrolledText(window, wrap = tkinter.WORD)
 frame.pack()
 message_show.pack(side = LEFT, fill = BOTH, expand = YES)
 message_field = tkinter.Entry(frame)
+message_field.bind('<Return>', send_message)
 message_field.pack()
 send_button = tkinter.Button(frame, text='SEND', command = send_message)
 send_button.pack()

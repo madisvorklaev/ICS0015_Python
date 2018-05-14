@@ -16,8 +16,14 @@ class Server:
     def handler(self, c, a):
         while True:
             data = c.recv(1024)
-            for connection in self.connections:
-                connection.send(data)
+            q = str(data, 'utf-8')
+            if q == ('/quit'+ '\n'):
+                self.connections.remove(c)
+                c.close()
+                break
+            else:
+                for connection in self.connections:
+                    connection.send(data)
             if not data:
                 self.connections.remove(c)
                 c.close()
@@ -31,9 +37,8 @@ class Server:
             cThread.start()
             self.connections.append(c)
             print(self.connections)
-#            if (len(self.connections)) > 5:
-#                c.send(b'Sorry, too many connections')
-#                c.send(b'{quit}')
+            if (len(self.connections)) > 2:
+                c.send(b'{quit}')
 #                self.connections.remove(c)
 #                c.close()
 
