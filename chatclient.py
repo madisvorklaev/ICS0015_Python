@@ -33,9 +33,6 @@ def callback():
     if messagebox.askokcancel("Quit", "Do you really wish to quit?"):
         root.destroy()
         s.close()
-        exit()
-
-
 
 root = Tk()
 root.protocol("WM_DELETE_WINDOW", callback)
