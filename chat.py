@@ -37,10 +37,8 @@ class Server:
             cThread.start()
             self.connections.append(c)
             print(self.connections)
-            if (len(self.connections)) > 2:
-                c.send(b'{quit}')
-#                self.connections.remove(c)
-#                c.close()
+            if (len(self.connections)) > 5:
+                c.send(b'/quit')
 
 server = Server()
 server.run()
