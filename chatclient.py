@@ -1,6 +1,7 @@
 # The network part is from https://www.youtube.com/watch?v=D0SLpD7JvZI
 # https://medium.com/swlh/lets-write-a-chat-app-in-python-f6783a9ac170
-#This is a chat client. Run the server chat.py first!
+# This is a chat client. Run the server chat.py first!
+# Tested with Python 3.5.2 on Ubuntu.
 
 import socket
 import threading

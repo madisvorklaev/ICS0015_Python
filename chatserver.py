@@ -1,5 +1,6 @@
 # most of the code is from https://www.youtube.com/watch?v=D0SLpD7JvZI
-#This is a chat server. Run this first, and then chatclient.py 
+# This is a chat server. Run this first, and then chatclient.py
+# Tested with Python 3.5.2 on Ubuntu.
 
 
 import socket
