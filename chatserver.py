@@ -16,17 +16,21 @@ class Server:
         print('Server Running.....')
         self.s.listen(5)
 
+
     def handler(self, c, a):
         while True:
             data = c.recv(1024)
+            self.con_num = str(self.connections.index(c))
             q = str(data, 'utf-8')
             if q == ('/quit'+ '\n'):
+                for connection in self.connections:
+                    connection.send(bytes(self.con_num + ' has left the chatroom \n', 'utf8'))
                 self.connections.remove(c)
                 c.close()
                 break
             else:
                 for connection in self.connections:
-                    connection.send(data)
+                    connection.send(bytes(self.con_num + ' says: ', 'utf8') + data)
             if not data:
                 self.connections.remove(c)
                 c.close()
@@ -38,7 +42,7 @@ class Server:
             cThread = threading.Thread(target=self.handler, args=(c, a))
             cThread.daemon = True
             cThread.start()
-            self.connections.append(c)
+            self.connections.append(c) 
             print(self.connections)
             if (len(self.connections)) > 5:
                 c.send(b'/quit')
